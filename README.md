@@ -1,4 +1,4 @@
-# 📦 SewaQ – Platform Sewa-Menyewa Barang Berbasis Komunitas Lokal
+# 📦 SewaQ – Platform Sewa-Menyewa Barang
 
 **SewaQ** adalah web app marketplace untuk menyewa dan menyewakan berbagai jenis barang (iPhone, alat hiking, kamera, dll) yang sementara ini difokuskan untuk lingkungan lokal dengan radius maksimum 10 km dan sistem pembayaran *Cash on Delivery* (COD). Proyek ini dikembangkan untuk mengikuti lomba **GEMASTIK XVIII Divisi Pengembangan Perangkat Lunak** tahun 2025.
 
