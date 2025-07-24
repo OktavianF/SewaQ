@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import Layout from '@/components/layout/Layout';
 import { Eye, EyeOff, Mail, Lock, User, MapPin } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import logo from '@/assets/logo.png'; 
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -97,9 +98,7 @@ const Register = () => {
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center px-4 py-12 bg-gradient-to-br from-sewaqa-green-lighter via-background to-accent-blue/5">
         <Card className="w-full max-w-md shadow-large bg-gradient-card border-primary/10">
           <CardHeader className="text-center">
-            <div className="mx-auto h-12 w-12 rounded-xl bg-gradient-primary flex items-center justify-center mb-4">
-              <span className="text-primary-foreground font-bold text-lg">SQ</span>
-            </div>
+            <img src={logo} alt="Logo SewaQ" className="h-16 w-16 mx-auto" />
             <CardTitle className="text-2xl font-bold">Daftar di SewaQ</CardTitle>
             <CardDescription>
               Buat akun untuk mulai menyewa barang di sekitar Anda
