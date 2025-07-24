@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Leaflet CSS */
+@import 'leaflet/dist/leaflet.css';
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 212 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 212 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 212 84% 4.9%;
+
+    /* SewaQ Brand Colors - Green Primary */
+    --primary: 142 76% 36%;  /* Fresh green */
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 142 76% 50%;
+    --primary-dark: 142 76% 25%;
+
+    /* Blue Accent */
+    --accent-blue: 207 90% 54%;
+    --accent-blue-light: 207 90% 65%;
+    
+    --secondary: 142 30% 96%;
+    --secondary-foreground: 142 76% 15%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 142 30% 95%;
+    --accent-foreground: 142 76% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142 76% 36%;
+
+    /* SewaQ Custom Variables */
+    --sewaqa-green: 142 76% 36%;
+    --sewaqa-green-light: 142 76% 50%;
+    --sewaqa-green-lighter: 142 30% 95%;
+    --sewaqa-blue: 207 90% 54%;
+    --sewaqa-blue-light: 207 90% 65%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--sewaqa-green)), hsl(var(--sewaqa-green-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--sewaqa-green)), hsl(var(--sewaqa-blue)));
+    --gradient-card: linear-gradient(145deg, hsl(0 0% 100%), hsl(var(--sewaqa-green-lighter)));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 6px -1px hsl(var(--sewaqa-green) / 0.1), 0 2px 4px -1px hsl(var(--sewaqa-green) / 0.06);
+    --shadow-medium: 0 10px 15px -3px hsl(var(--sewaqa-green) / 0.1), 0 4px 6px -2px hsl(var(--sewaqa-green) / 0.05);
+    --shadow-large: 0 25px 50px -12px hsl(var(--sewaqa-green) / 0.25);
+    
+    /* Animation */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 142 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 142 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 142 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 142 76% 50%;
+    --primary-foreground: 142 84% 4.9%;
+    --primary-light: 142 76% 60%;
+    --primary-dark: 142 76% 35%;
+
+    --accent-blue: 207 90% 65%;
+    --accent-blue-light: 207 90% 75%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 142 76% 50%;
+    
+    --sewaqa-green: 142 76% 50%;
+    --sewaqa-green-light: 142 76% 60%;
+    --sewaqa-green-lighter: 217.2 32.6% 17.5%;
+    --sewaqa-blue: 207 90% 65%;
+    --sewaqa-blue-light: 207 90% 75%;
+    
+    --gradient-primary: linear-gradient(135deg, hsl(var(--sewaqa-green)), hsl(var(--sewaqa-green-light)));
+    --gradient-hero: linear-gradient(135deg, hsl(var(--sewaqa-green)), hsl(var(--sewaqa-blue)));
+    --gradient-card: linear-gradient(145deg, hsl(217.2 32.6% 17.5%), hsl(217.2 32.6% 20%));
+    
+    --shadow-soft: 0 4px 6px -1px hsl(0 0% 0% / 0.3), 0 2px 4px -1px hsl(0 0% 0% / 0.2);
+    --shadow-medium: 0 10px 15px -3px hsl(0 0% 0% / 0.3), 0 4px 6px -2px hsl(0 0% 0% / 0.2);
+    --shadow-large: 0 25px 50px -12px hsl(0 0% 0% / 0.5);
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s infinite;
+}
