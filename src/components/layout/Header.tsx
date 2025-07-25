@@ -23,24 +23,13 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* Search Bar - Hidden on mobile */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="relative w-full">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-              <Input
-                placeholder="Cari barang di sekitar Anda..."
-                className="pl-10 rounded-full border-primary/20 focus:border-primary"
-              />
-            </div>
-          </div>
-
           {/* Navigation - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/explore')}>
+            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/items')}>
               <MapPin className="h-4 w-4 mr-2" />
               Jelajahi
             </Button>
-            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/dashboard')}>
+            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/open-store')}>
               <Store className="h-4 w-4 mr-2" />
               Toko Saya
             </Button>
@@ -57,6 +46,9 @@ const Header = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem onClick={() => navigate('/profile')}>
+                  Profil
+                </DropdownMenuItem>
                 <DropdownMenuItem onClick={() => navigate('/login')}>
                   Masuk
                 </DropdownMenuItem>
@@ -76,17 +68,6 @@ const Header = () => {
           >
             <Menu className="h-5 w-5" />
           </Button>
-        </div>
-
-        {/* Mobile Search */}
-        <div className="md:hidden pb-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Cari barang di sekitar Anda..."
-              className="pl-10 rounded-full border-primary/20 focus:border-primary"
-            />
-          </div>
         </div>
 
         {/* Mobile Menu */}
