@@ -24,7 +24,7 @@ const mockItems = [
     distance: 2.3,
     location: 'Kemang, Jakarta Selatan',
     owner: 'Ahmad Rental',
-    image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400',
+    image: 'https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     available: true
   },
   {
@@ -38,7 +38,7 @@ const mockItems = [
     distance: 4.7,
     location: 'Senayan, Jakarta Pusat',
     owner: 'Outdoor Gear',
-    image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400',
+    image: 'https://images.unsplash.com/photo-1571687949921-1306bfb24b72?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     available: true
   },
   {
@@ -52,7 +52,7 @@ const mockItems = [
     distance: 6.2,
     location: 'Blok M, Jakarta Selatan',
     owner: 'Game Station',
-    image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400',
+    image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxheXN0YXRpb258ZW58MHx8MHx8fDA%3D',
     available: false
   },
   {
@@ -66,7 +66,7 @@ const mockItems = [
     distance: 8.1,
     location: 'Menteng, Jakarta Pusat',
     owner: 'Tech Rental Pro',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+    image: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     available: true
   }
 ];
@@ -149,80 +149,174 @@ const Items = () => {
             }
           </p>
         </div>
-
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar Filter */}
-          <div className="lg:w-64 space-y-6">
-            <Card>
+          {/* Mobile Filter Toggle */}
+          <div className="lg:hidden">
+            <Card className="bg-gradient-card border-border/50 shadow-soft">
               <CardContent className="p-4">
-                <div className="flex items-center gap-2 mb-4">
+                <Button 
+                  variant="outline" 
+                  className="w-full flex items-center gap-2 border-sewaqa-green/30 hover:bg-sewaqa-green-lighter"
+                  onClick={() => {
+                    const filterCard = document.getElementById('filter-card');
+                    const isHidden = filterCard?.classList.contains('hidden');
+                    if (isHidden) {
+                      filterCard?.classList.remove('hidden');
+                    } else {
+                      filterCard?.classList.add('hidden');
+                    }
+                  }}
+                >
                   <Filter className="h-4 w-4" />
-                  <h3 className="font-semibold">Filter</h3>
+                  <span>Filter & Pencarian</span>
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Sidebar Filter */}
+          <div className="lg:w-80 space-y-6">
+            <Card 
+              id="filter-card" 
+              className="hidden lg:block bg-gradient-card border-border/50 shadow-soft hover:shadow-medium transition-all duration-300"
+            >
+              <CardContent className="p-6 space-y-6">
+                <div className="flex items-center gap-3 pb-2 border-b border-border/50">
+                  <div className="p-2 rounded-lg bg-sewaqa-green-lighter">
+                    <Filter className="h-5 w-5 text-sewaqa-green" />
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground">Filter Pencarian</h3>
                 </div>
 
                 {/* Search */}
-                <div className="mb-4">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-foreground block">Pencarian</label>
+                  <div className="relative group">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-sewaqa-green transition-colors" />
                     <Input
                       placeholder="Cari barang..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10"
+                      className="pl-10 border-border/50 focus:border-sewaqa-green focus:ring-sewaqa-green/20 bg-background/50 transition-all"
                     />
                   </div>
                 </div>
 
-                <Separator className="my-4" />
+                <Separator className="bg-border/30" />
 
                 {/* Category Filter */}
-                <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">Kategori</label>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-foreground block">Kategori</label>
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger>
-                      <SelectValue />
+                    <SelectTrigger className="border-border/50 focus:border-sewaqa-green focus:ring-sewaqa-green/20 bg-background/50">
+                      <SelectValue placeholder="Pilih kategori" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-popover border-border/50 shadow-medium">
                       {categories.map(category => (
-                        <SelectItem key={category} value={category}>{category}</SelectItem>
+                        <SelectItem 
+                          key={category} 
+                          value={category}
+                          className="hover:bg-sewaqa-green-lighter focus:bg-sewaqa-green-lighter"
+                        >
+                          {category}
+                        </SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
-                <Separator className="my-4" />
+                <Separator className="bg-border/30" />
 
                 {/* Price Range */}
-                <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">
-                    Harga per Hari: {formatPrice(priceRange[0])} - {formatPrice(priceRange[1])}
-                  </label>
-                  <Slider
-                    value={priceRange}
-                    onValueChange={setPriceRange}
-                    max={200000}
-                    min={0}
-                    step={25000}
-                    className="mt-2"
-                  />
+                <div className="space-y-4">
+                  <div className="flex justify-between items-center">
+                    <label className="text-sm font-medium text-foreground">Rentang Harga</label>
+                    <div className="text-xs text-muted-foreground bg-muted px-2 py-1 rounded">
+                      per hari
+                    </div>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="font-medium text-sewaqa-green">{formatPrice(priceRange[0])}</span>
+                      <span className="font-medium text-sewaqa-green">{formatPrice(priceRange[1])}</span>
+                    </div>
+                    <Slider
+                      value={priceRange}
+                      onValueChange={setPriceRange}
+                      max={200000}
+                      min={0}
+                      step={25000}
+                      className="w-full"
+                    />
+                    <div className="flex justify-between text-xs text-muted-foreground">
+                      <span>Rp 0</span>
+                      <span>Rp 200K</span>
+                    </div>
+                  </div>
                 </div>
 
-                <Separator className="my-4" />
+                <Separator className="bg-border/30" />
 
                 {/* Rating Filter */}
-                <div className="mb-4">
-                  <label className="text-sm font-medium mb-2 block">Rating Minimum</label>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-foreground block">Rating Minimum</label>
                   <Select value={minRating.toString()} onValueChange={(value) => setMinRating(Number(value))}>
-                    <SelectTrigger>
-                      <SelectValue />
+                    <SelectTrigger className="border-border/50 focus:border-sewaqa-green focus:ring-sewaqa-green/20 bg-background/50">
+                      <SelectValue placeholder="Pilih rating" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="0">Semua Rating</SelectItem>
-                      <SelectItem value="3">3+ ⭐</SelectItem>
-                      <SelectItem value="4">4+ ⭐</SelectItem>
-                      <SelectItem value="4.5">4.5+ ⭐</SelectItem>
+                    <SelectContent className="bg-popover border-border/50 shadow-medium">
+                      <SelectItem value="0" className="hover:bg-sewaqa-green-lighter focus:bg-sewaqa-green-lighter">
+                        Semua Rating
+                      </SelectItem>
+                      <SelectItem value="3" className="hover:bg-sewaqa-green-lighter focus:bg-sewaqa-green-lighter">
+                        <div className="flex items-center gap-2">
+                          <span>3.0+</span>
+                          <div className="flex">
+                            {[1,2,3].map(i => (
+                              <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="4" className="hover:bg-sewaqa-green-lighter focus:bg-sewaqa-green-lighter">
+                        <div className="flex items-center gap-2">
+                          <span>4.0+</span>
+                          <div className="flex">
+                            {[1,2,3,4].map(i => (
+                              <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                      </SelectItem>
+                      <SelectItem value="4.5" className="hover:bg-sewaqa-green-lighter focus:bg-sewaqa-green-lighter">
+                        <div className="flex items-center gap-2">
+                          <span>4.5+</span>
+                          <div className="flex">
+                            {[1,2,3,4,5].map(i => (
+                              <Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                            ))}
+                          </div>
+                        </div>
+                      </SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                {/* Reset Button */}
+                <div className="pt-4 border-t border-border/30">
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="w-full border-sewaqa-green/30 text-sewaqa-green hover:bg-sewaqa-green hover:text-primary-foreground transition-all"
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedCategory('Semua');
+                      setPriceRange([0, 200000]);
+                      setMinRating(0);
+                    }}
+                  >
+                    Reset Semua Filter
+                  </Button>
                 </div>
               </CardContent>
             </Card>
