@@ -10,11 +10,6 @@ import Items from "./pages/Items";
 import ItemDetail from "./pages/ItemDetail";
 import OpenStore from "./pages/OpenStore";
 import Dashboard from "./pages/Dashboard";
-import MyItems from "./pages/MyItems";
-import IncomingBookings from "./pages/IncomingBookings";
-import Reviews from "./pages/Reviews";
-import Statistics from "./pages/Statistics";
-import StoreProfile from "./pages/StoreProfile";
 import ProfilePage from "./pages/ProfilePage";
 import NotFound from "./pages/NotFound";
 

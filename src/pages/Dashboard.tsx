@@ -6,15 +6,15 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { Package, Calendar, Star, TrendingUp, LogOut, User, BarChart3, MessageSquare, Inbox } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import MyItems from './MyItems';
-import IncomingBookings from './IncomingBookings';
-import Reviews from './Reviews';
-import Statistics from './Statistics';
-import StoreProfile from './StoreProfile';
+import MyItems from '@/components/dashboardStore/MyItems';
+import IncomingBookings from '@/components/dashboardStore/IncomingBookings';
+import Reviews from '@/components/dashboardStore/Reviews';
+import Statistics from '@/components/dashboardStore/Statistics';
+import StoreProfile from '@/components/dashboardStore/StoreProfile';
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [activeMenu, setActiveMenu] = useState('dashboard');
+  const [activeMenu, setActiveMenu] = useState('items');
 
   const menuItems = [
     { id: 'items', label: 'Barang Saya', icon: Package },

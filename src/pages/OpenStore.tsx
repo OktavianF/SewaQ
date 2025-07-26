@@ -6,9 +6,10 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Layout from '@/components/layout/Layout';
-import { Upload, MapPin, Clock, Store } from 'lucide-react';
+import { Upload, MapPin, Clock, Store, AlertCircle } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { cn } from '@/lib/utils';
 
 const OpenStore = () => {
   const { toast } = useToast();
@@ -24,15 +25,128 @@ const OpenStore = () => {
     rentalTerms: ''
   });
 
+  const [errors, setErrors] = useState({
+    storeName: '',
+    category: '',
+    description: '',
+    profileImage: '',
+    address: '',
+    whatsapp: ''
+  });
+
+  const [touched, setTouched] = useState({
+    storeName: false,
+    category: false,
+    description: false,
+    profileImage: false,
+    address: false,
+    whatsapp: false
+  });
+
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setFormData(prev => ({ ...prev, profileImage: file }));
+      handleFieldChange('profileImage', file);
     }
+  };
+
+  const validateField = (name: string, value: string | File | null) => {
+    switch (name) {
+      case 'storeName':
+        if (!value || (typeof value === 'string' && value.trim().length < 3)) {
+          return 'Nama toko minimal 3 karakter';
+        }
+        break;
+      case 'category':
+        if (!value) {
+          return 'Kategori harus dipilih';
+        }
+        break;
+      case 'description':
+        if (!value || (typeof value === 'string' && value.trim().length < 10)) {
+          return 'Deskripsi minimal 10 karakter';
+        }
+        break;
+      case 'profileImage':
+        if (!value) {
+          return 'Foto profil toko wajib diupload';
+        }
+        break;
+      case 'address':
+        if (!value || (typeof value === 'string' && value.trim().length < 10)) {
+          return 'Alamat lengkap minimal 10 karakter';
+        }
+        break;
+      case 'whatsapp':
+        if (!value || (typeof value === 'string' && !/^08\d{8,11}$/.test(value.replace(/\s/g, '')))) {
+          return 'Nomor WhatsApp harus dimulai dengan 08 dan 10-13 digit';
+        }
+        break;
+    }
+    return '';
+  };
+
+  const handleFieldChange = (name: string, value: string | File | null) => {
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Validate field if it has been touched
+    if (touched[name as keyof typeof touched]) {
+      const error = validateField(name, value);
+      setErrors(prev => ({ ...prev, [name]: error }));
+    }
+  };
+
+  const handleFieldBlur = (name: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }));
+    let value: string | File | null;
+    
+    if (name === 'profileImage') {
+      value = formData.profileImage;
+    } else if (name in formData && typeof formData[name as keyof typeof formData] === 'string') {
+      value = formData[name as keyof typeof formData] as string;
+    } else {
+      value = null;
+    }
+    
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {
+      storeName: validateField('storeName', formData.storeName),
+      category: validateField('category', formData.category),
+      description: validateField('description', formData.description),
+      profileImage: validateField('profileImage', formData.profileImage),
+      address: validateField('address', formData.address),
+      whatsapp: validateField('whatsapp', formData.whatsapp)
+    };
+
+    setErrors(newErrors);
+    setTouched({
+      storeName: true,
+      category: true,
+      description: true,
+      profileImage: true,
+      address: true,
+      whatsapp: true
+    });
+
+    return !Object.values(newErrors).some(error => error !== '');
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      toast({
+        title: "Form tidak valid",
+        description: "Silakan periksa kembali semua field yang wajib diisi.",
+        variant: "destructive"
+      });
+      return;
+    }
+
     toast({
       title: "Toko berhasil didaftarkan!",
       description: "Toko Anda akan diaktifkan dalam 24 jam setelah verifikasi."
@@ -68,24 +182,39 @@ const OpenStore = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Nama Toko */}
                 <div className="space-y-2">
-                  <Label htmlFor="storeName">Nama Toko</Label>
+                  <Label htmlFor="storeName" className={cn(errors.storeName && touched.storeName && "text-destructive")}>
+                    Nama Toko <span className="text-destructive">*</span>
+                  </Label>
                   <Input 
                     id="storeName"
                     placeholder="Masukkan nama toko Anda"
                     value={formData.storeName}
-                    onChange={(e) => setFormData(prev => ({ ...prev, storeName: e.target.value }))}
+                    onChange={(e) => handleFieldChange('storeName', e.target.value)}
+                    onBlur={() => handleFieldBlur('storeName')}
+                    className={cn(errors.storeName && touched.storeName && "border-destructive focus-visible:ring-destructive")}
                     required
                   />
+                  {errors.storeName && touched.storeName && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.storeName}
+                    </div>
+                  )}
                 </div>
 
                 {/* Kategori Utama */}
                 <div className="space-y-2">
-                  <Label htmlFor="category">Kategori Utama</Label>
+                  <Label htmlFor="category" className={cn(errors.category && touched.category && "text-destructive")}>
+                    Kategori Utama <span className="text-destructive">*</span>
+                  </Label>
                   <Select 
                     value={formData.category} 
-                    onValueChange={(value) => setFormData(prev => ({ ...prev, category: value }))}
+                    onValueChange={(value) => {
+                      handleFieldChange('category', value);
+                      handleFieldBlur('category');
+                    }}
                   >
-                    <SelectTrigger>
+                    <SelectTrigger className={cn(errors.category && touched.category && "border-destructive focus:ring-destructive")}>
                       <SelectValue placeholder="Pilih kategori utama toko" />
                     </SelectTrigger>
                     <SelectContent>
@@ -95,29 +224,51 @@ const OpenStore = () => {
                       <SelectItem value="lainnya">Lainnya</SelectItem>
                     </SelectContent>
                   </Select>
+                  {errors.category && touched.category && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.category}
+                    </div>
+                  )}
                 </div>
 
                 {/* Deskripsi Singkat */}
                 <div className="space-y-2">
-                  <Label htmlFor="description">Deskripsi Singkat</Label>
+                  <Label htmlFor="description" className={cn(errors.description && touched.description && "text-destructive")}>
+                    Deskripsi Singkat <span className="text-destructive">*</span>
+                  </Label>
                   <Textarea 
                     id="description"
                     placeholder="Ceritakan tentang toko Anda..."
                     value={formData.description}
-                    onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
+                    onChange={(e) => handleFieldChange('description', e.target.value)}
+                    onBlur={() => handleFieldBlur('description')}
+                    className={cn(errors.description && touched.description && "border-destructive focus-visible:ring-destructive")}
                     rows={4}
                   />
+                  {errors.description && touched.description && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.description}
+                    </div>
+                  )}
                 </div>
 
                 {/* Upload Foto Profil */}
                 <div className="space-y-2">
-                  <Label htmlFor="profileImage">Foto Profil Toko</Label>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-primary/50 transition-colors">
+                  <Label htmlFor="profileImage" className={cn(errors.profileImage && touched.profileImage && "text-destructive")}>
+                    Foto Profil Toko <span className="text-destructive">*</span>
+                  </Label>
+                  <div className={cn(
+                    "border-2 border-dashed rounded-lg p-6 text-center hover:border-primary/50 transition-colors",
+                    errors.profileImage && touched.profileImage ? "border-destructive" : "border-border"
+                  )}>
                     <input
                       type="file"
                       id="profileImage"
                       accept="image/*"
                       onChange={handleImageUpload}
+                      onBlur={() => handleFieldBlur('profileImage')}
                       className="hidden"
                     />
                     <label htmlFor="profileImage" className="cursor-pointer">
@@ -127,6 +278,12 @@ const OpenStore = () => {
                       </p>
                     </label>
                   </div>
+                  {errors.profileImage && touched.profileImage && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.profileImage}
+                    </div>
+                  )}
                 </div>
 
                 {/* Lokasi Toko */}
@@ -143,26 +300,46 @@ const OpenStore = () => {
 
                 {/* Alamat Lengkap */}
                 <div className="space-y-2">
-                  <Label htmlFor="address">Alamat Lengkap</Label>
+                  <Label htmlFor="address" className={cn(errors.address && touched.address && "text-destructive")}>
+                    Alamat Lengkap <span className="text-destructive">*</span>
+                  </Label>
                   <Textarea 
                     id="address"
                     placeholder="Masukkan alamat lengkap toko Anda"
                     value={formData.address}
-                    onChange={(e) => setFormData(prev => ({ ...prev, address: e.target.value }))}
+                    onChange={(e) => handleFieldChange('address', e.target.value)}
+                    onBlur={() => handleFieldBlur('address')}
+                    className={cn(errors.address && touched.address && "border-destructive focus-visible:ring-destructive")}
                     rows={3}
                   />
+                  {errors.address && touched.address && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.address}
+                    </div>
+                  )}
                 </div>
 
                 {/* Nomor WhatsApp */}
                 <div className="space-y-2">
-                  <Label htmlFor="whatsapp">Nomor WhatsApp</Label>
+                  <Label htmlFor="whatsapp" className={cn(errors.whatsapp && touched.whatsapp && "text-destructive")}>
+                    Nomor WhatsApp <span className="text-destructive">*</span>
+                  </Label>
                   <Input 
                     id="whatsapp"
                     type="tel"
                     placeholder="08123456789"
                     value={formData.whatsapp}
-                    onChange={(e) => setFormData(prev => ({ ...prev, whatsapp: e.target.value }))}
+                    onChange={(e) => handleFieldChange('whatsapp', e.target.value)}
+                    onBlur={() => handleFieldBlur('whatsapp')}
+                    className={cn(errors.whatsapp && touched.whatsapp && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.whatsapp && touched.whatsapp && (
+                    <div className="flex items-center gap-1 text-sm text-destructive">
+                      <AlertCircle className="h-4 w-4" />
+                      {errors.whatsapp}
+                    </div>
+                  )}
                 </div>
 
                 {/* Jam Operasional */}
