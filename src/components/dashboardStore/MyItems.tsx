@@ -4,8 +4,10 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Plus, Edit, Trash2, Eye } from 'lucide-react';
+import AddItemModal from './AddItemModal';
 
 const MyItems = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [items] = useState([
     {
       id: 1,
@@ -52,7 +54,7 @@ const MyItems = () => {
           <h1 className="text-2xl font-bold text-foreground">Barang Saya</h1>
           <p className="text-muted-foreground">Kelola semua barang rental Anda</p>
         </div>
-        <Button className="flex items-center gap-2">
+        <Button className="flex items-center gap-2" onClick={() => setIsModalOpen(true)}>
           <Plus className="h-4 w-4" />
           Tambah Barang
         </Button>
@@ -145,6 +147,11 @@ const MyItems = () => {
           </Table>
         </CardContent>
       </Card>
+
+      <AddItemModal 
+        open={isModalOpen} 
+        onOpenChange={setIsModalOpen} 
+      />
     </div>
   );
 };
