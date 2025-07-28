@@ -10,6 +10,17 @@ import logo from '@/assets/logo.png';
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
+   
+  // Check if user is logged in
+  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+  
+  const handleLogout = () => {
+    localStorage.removeItem('userLoggedIn');
+    localStorage.removeItem('userRegistered');
+    localStorage.removeItem('hasStore');
+    navigate('/');
+    window.location.reload(); // Refresh to update UI state
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -46,15 +57,25 @@ const Header = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => navigate('/profile')}>
-                  Profil
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/login')}>
-                  Masuk
-                </DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate('/register')}>
-                  Daftar
-                </DropdownMenuItem>
+                {isLoggedIn ? (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate('/profile')}>
+                      Profil
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={handleLogout}>
+                      Logout
+                    </DropdownMenuItem>
+                  </>
+                ) : (
+                  <>
+                    <DropdownMenuItem onClick={() => navigate('/login')}>
+                      Masuk
+                    </DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => navigate('/register')}>
+                      Daftar
+                    </DropdownMenuItem>
+                  </>
+                )}
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
@@ -84,13 +105,28 @@ const Header = () => {
             
             {/* Mobile Profile Menu */}
             <div className="border-t pt-2 mt-2">
-              <Button variant="outline" className="w-full justify-start" onClick={() => navigate('/login')}>
-                <User className="h-4 w-4 mr-2" />
-                Masuk
-              </Button>
-              <Button variant="cta" className="w-full justify-start mt-2" onClick={() => navigate('/register')}>
-                Daftar
-              </Button>
+              {isLoggedIn ? (
+                <>
+                  <Button variant="ghost" className="w-full justify-start" onClick={() => navigate('/profile')}>
+                    <User className="h-4 w-4 mr-2" />
+                    Profil
+                  </Button>
+                  <Button variant="outline" className="w-full justify-start" onClick={handleLogout}>
+                    <User className="h-4 w-4 mr-2" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" className="w-full justify-start" onClick={() => navigate('/login')}>
+                    <User className="h-4 w-4 mr-2" />
+                    Masuk
+                  </Button>
+                  <Button variant="cta" className="w-full justify-start mt-2" onClick={() => navigate('/register')}>
+                    Daftar
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         )}

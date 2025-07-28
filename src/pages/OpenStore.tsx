@@ -147,6 +147,7 @@ const OpenStore = () => {
       return;
     }
 
+    localStorage.setItem('hasStore', 'true');
     toast({
       title: "Toko berhasil didaftarkan!",
       description: "Toko Anda akan diaktifkan dalam 24 jam setelah verifikasi."

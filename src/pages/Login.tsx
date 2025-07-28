@@ -26,6 +26,7 @@ const Login = () => {
     // Simulasi login
     setTimeout(() => {
       setIsLoading(false);
+      localStorage.setItem('userLoggedIn', 'true');
       toast({
         title: "Login berhasil!",
         description: "Selamat datang kembali di SewaQ.",

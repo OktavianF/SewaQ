@@ -10,14 +10,18 @@ import {  } from 'lucide-react';
 const Homepage = () => {
   const navigate = useNavigate();
 
-const categories = [
-  { name: 'Elektronik', icon: <Smartphone className="w-10 h-10 mx-auto text-primary" />, count: '120+ barang' },
-  { name: 'Kendaraan', icon: <Car className="w-10 h-10 mx-auto text-primary" />, count: '85+ barang' },
-  { name: 'Peralatan', icon: <Wrench className="w-10 h-10 mx-auto text-primary" />, count: '200+ barang' },
-  { name: 'Olahraga', icon: <Dumbbell className="w-10 h-10 mx-auto text-primary" />, count: '90+ barang' },
-  { name: 'Rumah Tangga', icon: <Home className="w-10 h-10 mx-auto text-primary" />, count: '150+ barang' },
-  { name: 'Fashion', icon: <Shirt className="w-10 h-10 mx-auto text-primary" />, count: '75+ barang' },
-];
+  // Check user status from localStorage
+  const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+  const hasStore = localStorage.getItem('hasStore') === 'true';
+
+  const categories = [
+    { name: 'Elektronik', icon: <Smartphone className="w-10 h-10 mx-auto text-primary" />, count: '120+ barang' },
+    { name: 'Kendaraan', icon: <Car className="w-10 h-10 mx-auto text-primary" />, count: '85+ barang' },
+    { name: 'Peralatan', icon: <Wrench className="w-10 h-10 mx-auto text-primary" />, count: '200+ barang' },
+    { name: 'Olahraga', icon: <Dumbbell className="w-10 h-10 mx-auto text-primary" />, count: '90+ barang' },
+    { name: 'Rumah Tangga', icon: <Home className="w-10 h-10 mx-auto text-primary" />, count: '150+ barang' },
+    { name: 'Fashion', icon: <Shirt className="w-10 h-10 mx-auto text-primary" />, count: '75+ barang' },
+  ];
 
   const features = [
     {
@@ -77,15 +81,17 @@ const categories = [
               <Search className="h-5 w-5 mr-2" />
               Jelajahi Barang di Sekitarmu
             </Button>
-            <Button 
-              variant="outline" 
-              size="xl"
-              onClick={() => navigate('/register')}
-              className="w-full sm:w-auto"
-            >
-              Daftar Sekarang
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
+            {!isLoggedIn && (
+              <Button 
+                variant="outline" 
+                size="xl"
+                onClick={() => navigate('/register')}
+                className="w-full sm:w-auto"
+              >
+                Daftar Sekarang
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            )}
           </div>
         </div>
       </section>
@@ -98,7 +104,11 @@ const categories = [
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {categories.map((category, index) => (
-              <Card key={index} className="cursor-pointer hover:shadow-medium transition-all hover:scale-105 bg-gradient-card border-primary/10">
+              <Card 
+                key={index} 
+                className="cursor-pointer hover:shadow-medium transition-all hover:scale-105 bg-gradient-card border-primary/10"
+                onClick={() => navigate(`/items?category=${encodeURIComponent(category.name)}`)}
+              >
                 <CardContent className="p-6 text-center min-h-[180px] flex flex-col justify-center items-center">
                   <div className="mb-3">{category.icon}</div>
                   <h3 className="font-semibold text-foreground mb-1">{category.name}</h3>
@@ -140,22 +150,26 @@ const categories = [
             Bergabung dan rasakan kemudahan menyewa barang di SewaQ.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Button 
-              variant="secondary" 
-              size="xl"
-              onClick={() => navigate('/register')}
-              className="w-full sm:w-auto bg-white/20 border-white/30 text-primary-foreground hover:bg-white/30"
-            >
-              Daftar Sebagai Penyewa
-            </Button>
-            <Button 
-              variant="outline" 
-              size="xl"
-              onClick={() => navigate('/register-owner')}
-              className="w-full sm:w-auto border-white/30 text-primary-foreground hover:bg-white/10"
-            >
-              Daftarkan Toko Anda
-            </Button>
+            {!isLoggedIn && (
+              <Button 
+                variant="secondary" 
+                size="xl"
+                onClick={() => navigate('/register')}
+                className="w-full sm:w-auto bg-white/20 border-white/30 text-primary-foreground hover:bg-white/30"
+              >
+                Daftar Sebagai Penyewa
+              </Button>
+            )}
+            {!hasStore && (
+              <Button 
+                variant="outline" 
+                size="xl"
+                onClick={() => navigate('/open-store')}
+                className="w-full sm:w-auto border-white/30 text-primary-foreground hover:bg-white/10"
+              >
+                Daftarkan Toko Anda
+              </Button>
+            )}
           </div>
         </div>
       </section>

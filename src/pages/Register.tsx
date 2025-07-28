@@ -41,6 +41,7 @@ const Register = () => {
     // Simulasi register
     setTimeout(() => {
       setIsLoading(false);
+      localStorage.setItem('userRegistered', 'true');
       toast({
         title: "Pendaftaran berhasil!",
         description: "Akun Anda telah dibuat. Silakan masuk untuk melanjutkan.",

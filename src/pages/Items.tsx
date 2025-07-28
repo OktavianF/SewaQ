@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Layout from '@/components/layout/Layout';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -74,6 +74,7 @@ const mockItems = [
 const categories = ['Semua', 'Elektronik', 'Outdoor', 'Gaming', 'Kendaraan', 'Olahraga'];
 
 const Items = () => {
+  const [searchParams] = useSearchParams();
   const [items, setItems] = useState(mockItems);
   const [filteredItems, setFilteredItems] = useState(mockItems);
   const [searchQuery, setSearchQuery] = useState('');
@@ -82,6 +83,14 @@ const Items = () => {
   const [minRating, setMinRating] = useState(0);
   const [userLocation, setUserLocation] = useState<{lat: number, lng: number} | null>(null);
   const [locationPermission, setLocationPermission] = useState<string>('loading');
+
+  // Set category from URL parameter
+  useEffect(() => {
+    const categoryParam = searchParams.get('category');
+    if (categoryParam && categories.includes(categoryParam)) {
+      setSelectedCategory(categoryParam);
+    }
+  }, [searchParams]);
 
   // Get user location
   useEffect(() => {
