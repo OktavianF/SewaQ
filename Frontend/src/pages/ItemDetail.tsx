@@ -137,10 +137,7 @@ const ItemDetail = () => {
   };
 
   const handleBooking = () => {
-    toast({
-      title: "Fitur akan segera hadir",
-      description: "Sistem booking sedang dalam pengembangan"
-    });
+    navigate(`/items/${id}/checkout`);
   };
 
   const isDateDisabled = (date: Date) => {
