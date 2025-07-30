@@ -36,7 +36,7 @@ const Header = () => {
 
           {/* Navigation - Desktop */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/items')}>
+            <Button variant="ghost" size="sm" className="text-foreground" onClick={() => navigate('/explore')}>
               <MapPin className="h-4 w-4 mr-2" />
               Jelajahi
             </Button>

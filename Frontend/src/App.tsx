@@ -11,6 +11,8 @@ import ItemDetail from "./pages/ItemDetail";
 import OpenStore from "./pages/OpenStore";
 import Dashboard from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
+import ExploreMap from "./pages/ExploreMap";
+import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
           <Route path="/register" element={<Register />} />
           <Route path="/items" element={<Items />} />
           <Route path="/items/:id" element={<ItemDetail />} />
+          <Route path="/items/:id/checkout" element={<Checkout />} />
+          <Route path="/explore" element={<ExploreMap />} />
           <Route path="/open-store" element={<OpenStore />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/profile" element={<ProfilePage />} />
