@@ -11,72 +11,13 @@ import { Separator } from '@/components/ui/separator';
 import { MapPin, Star, Filter, Search } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-// Mock data untuk demonstrasi
-const mockItems = [
-  {
-    id: 1,
-    title: 'Kamera DSLR Canon EOS 80D',
-    description: 'Kamera profesional untuk fotografi',
-    category: 'Elektronik',
-    pricePerDay: 75000,
-    rating: 4.8,
-    reviewCount: 24,
-    distance: 2.3,
-    location: 'Kemang, Jakarta Selatan',
-    owner: 'Ahmad Rental',
-    image: 'https://images.unsplash.com/photo-1510127034890-ba27508e9f1c?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    available: true
-  },
-  {
-    id: 2,
-    title: 'Tenda Camping 4 Orang',
-    description: 'Tenda berkualitas untuk camping keluarga',
-    category: 'Outdoor',
-    pricePerDay: 50000,
-    rating: 4.6,
-    reviewCount: 18,
-    distance: 4.7,
-    location: 'Senayan, Jakarta Pusat',
-    owner: 'Outdoor Gear',
-    image: 'https://images.unsplash.com/photo-1571687949921-1306bfb24b72?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    available: true
-  },
-  {
-    id: 3,
-    title: 'PlayStation 5 + 2 Controller',
-    description: 'Konsol gaming terbaru dengan 2 controller',
-    category: 'Gaming',
-    pricePerDay: 100000,
-    rating: 4.9,
-    reviewCount: 31,
-    distance: 6.2,
-    location: 'Blok M, Jakarta Selatan',
-    owner: 'Game Station',
-    image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGxheXN0YXRpb258ZW58MHx8MHx8fDA%3D',
-    available: false
-  },
-  {
-    id: 4,
-    title: 'Proyektor Epson EH-TW650',
-    description: 'Proyektor HD untuk presentasi dan hiburan',
-    category: 'Elektronik',
-    pricePerDay: 125000,
-    rating: 4.7,
-    reviewCount: 15,
-    distance: 8.1,
-    location: 'Menteng, Jakarta Pusat',
-    owner: 'Tech Rental Pro',
-    image: 'https://images.unsplash.com/photo-1535016120720-40c646be5580?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    available: true
-  }
-];
-
-const categories = ['Semua', 'Elektronik', 'Outdoor', 'Gaming', 'Kendaraan', 'Olahraga'];
+import { mockItems, categories } from '../data';
+import { Item } from '../types';
 
 const Items = () => {
   const [searchParams] = useSearchParams();
-  const [items, setItems] = useState(mockItems);
-  const [filteredItems, setFilteredItems] = useState(mockItems);
+  const [items, setItems] = useState<Item[]>(mockItems);
+  const [filteredItems, setFilteredItems] = useState<Item[]>(mockItems);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Semua');
   const [priceRange, setPriceRange] = useState([0, 200000]);

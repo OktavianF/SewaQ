@@ -21,62 +21,8 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
-// Mock data untuk detail barang
-const mockItemDetails = {
-  1: {
-    id: 1,
-    title: 'Kamera DSLR Canon EOS 80D',
-    description: 'Kamera DSLR profesional Canon EOS 80D dengan sensor APS-C 24.2MP. Dilengkapi dengan fitur autofocus yang cepat dan akurat, perfect untuk fotografi portrait, landscape, dan event. Kondisi sangat baik dan terawat.',
-    category: 'Elektronik',
-    images: [
-      'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800',
-      'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800',
-      'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800'
-    ],
-    pricing: {
-      perDay: 75000,
-      per3Days: 200000,
-      perWeek: 450000,
-      per2Weeks: 800000,
-      perMonth: 1500000
-    },
-    owner: {
-      name: 'Ahmad Rental',
-      rating: 4.8,
-      reviewCount: 24,
-      location: 'Kemang, Jakarta Selatan',
-      joinDate: '2023',
-      avatar: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800'
-    },
-    rentalTerms: [
-      'Deposit Rp 500.000 (dikembalikan setelah barang kembali)',
-      'Wajib membawa KTP/SIM saat pengambilan',
-      'Penyewa bertanggung jawab atas kerusakan',
-      'Pembayaran COD saat pengambilan barang',
-      'Gratis tutorial penggunaan untuk pemula'
-    ],
-    specifications: [
-      { label: 'Sensor', value: 'APS-C 24.2MP' },
-      { label: 'ISO Range', value: '100-25600' },
-      { label: 'Video', value: 'Full HD 1080p' },
-      { label: 'Baterai', value: 'LP-E6N (included)' },
-      { label: 'Memory Card', value: 'SD Card (not included)' }
-    ],
-    availability: {
-      unavailableDates: [
-        new Date(2024, 11, 25), // Christmas
-        new Date(2024, 11, 26),
-        new Date(2025, 0, 1),   // New Year
-        new Date(2025, 0, 15),
-        new Date(2025, 0, 16)
-      ]
-    },
-    rating: 4.8,
-    reviewCount: 24,
-    distance: 2.3,
-    available: true
-  }
-};
+import { mockItemDetails } from '../data';
+import { ItemDetails } from '../types';
 
 const ItemDetail = () => {
   const { id } = useParams();

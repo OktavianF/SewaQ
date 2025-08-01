@@ -32,44 +32,8 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 
-// Mock data untuk detail barang (same as ItemDetail)
-const mockItemDetails = {
-  1: {
-    id: 1,
-    title: 'Kamera DSLR Canon EOS 80D',
-    description: 'Kamera DSLR profesional Canon EOS 80D dengan sensor APS-C 24.2MP.',
-    category: 'Elektronik',
-    images: [
-      'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800',
-      'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800',
-      'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800'
-    ],
-    pricing: {
-      perDay: 75000,
-    },
-    owner: {
-      name: 'Ahmad Rental',
-      rating: 4.8,
-      reviewCount: 24,
-      location: 'Kemang, Jakarta Selatan',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100',
-      address: 'Jl. Kemang Raya No. 123, Kemang, Jakarta Selatan 12560'
-    },
-    rating: 4.8,
-    reviewCount: 24,
-    distance: 2.3,
-    available: true,
-    availability: {
-      unavailableDates: [
-        new Date(2024, 11, 25),
-        new Date(2024, 11, 26),
-        new Date(2025, 0, 1),
-        new Date(2025, 0, 15),
-        new Date(2025, 0, 16)
-      ]
-    }
-  }
-};
+import { mockItemDetails } from '../data';
+import { ItemDetails } from '../types';
 
 const Checkout = () => {
   const { id } = useParams();
