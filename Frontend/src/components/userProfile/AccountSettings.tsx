@@ -167,11 +167,11 @@ const AccountSettings = () => {
             </div>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">
+                <Button variant="destructive" className="w-full sm:w-auto">
                   Hapus Akun
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="w-[95vw] max-w-md mx-auto">
                 <AlertDialogHeader>
                   <AlertDialogTitle>Konfirmasi Hapus Akun</AlertDialogTitle>
                   <AlertDialogDescription>
@@ -179,11 +179,11 @@ const AccountSettings = () => {
                     dan tidak dapat dipulihkan. Tindakan ini tidak dapat dibatalkan.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Batal</AlertDialogCancel>
+                <AlertDialogFooter className="flex-col sm:flex-row gap-2">
+                  <AlertDialogCancel className="w-full sm:w-auto">Batal</AlertDialogCancel>
                   <AlertDialogAction 
                     onClick={handleDeleteAccount}
-                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90 w-full sm:w-auto"
                   >
                     Ya, Hapus Akun
                   </AlertDialogAction>
