@@ -9,9 +9,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Star, MapPin, MessageSquare, Calendar, DollarSign, Package } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useIsMobile } from '@/hooks/use-mobile';
+import RentalCard from './RentalCard';
 
 const Penyewaan = () => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [rentals] = useState([
     {
       id: 1,
@@ -117,7 +120,7 @@ const Penyewaan = () => {
           Lihat Detail
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto w-[95vw] mx-auto">
         <DialogHeader>
           <DialogTitle>Detail Penyewaan</DialogTitle>
         </DialogHeader>
@@ -182,7 +185,7 @@ const Penyewaan = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium">Tanggal Booking</Label>
                   <p className="text-sm">{formatDate(rental.startDate)} - {formatDate(rental.endDate)}</p>
@@ -311,32 +314,48 @@ const Penyewaan = () => {
         <CardTitle>Riwayat Penyewaan</CardTitle>
       </CardHeader>
       <CardContent>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Nama Barang</TableHead>
-              <TableHead>Pemilik</TableHead>
-              <TableHead>Tanggal Sewa</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Aksi</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
+        {isMobile ? (
+          <div className="space-y-4">
             {rentals.map((rental) => (
-              <TableRow key={rental.id}>
-                <TableCell className="font-medium">{rental.itemName}</TableCell>
-                <TableCell>{rental.owner}</TableCell>
-                <TableCell>
-                  {formatDate(rental.startDate)} - {formatDate(rental.endDate)}
-                </TableCell>
-                <TableCell>{getStatusBadge(rental.status)}</TableCell>
-                <TableCell>
-                  <RentalDetailModal rental={rental} />
-                </TableCell>
-              </TableRow>
+              <RentalCard
+                key={rental.id}
+                rental={rental}
+                formatDate={formatDate}
+                formatCurrency={formatCurrency}
+                getStatusBadge={getStatusBadge}
+              />
             ))}
-          </TableBody>
-        </Table>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Nama Barang</TableHead>
+                  <TableHead>Pemilik</TableHead>
+                  <TableHead>Tanggal Sewa</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Aksi</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {rentals.map((rental) => (
+                  <TableRow key={rental.id}>
+                    <TableCell className="font-medium">{rental.itemName}</TableCell>
+                    <TableCell>{rental.owner}</TableCell>
+                    <TableCell>
+                      {formatDate(rental.startDate)} - {formatDate(rental.endDate)}
+                    </TableCell>
+                    <TableCell>{getStatusBadge(rental.status)}</TableCell>
+                    <TableCell>
+                      <RentalDetailModal rental={rental} />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
