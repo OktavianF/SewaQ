@@ -109,6 +109,11 @@ export const mockItemDetails: { [key: number]: ItemDetails } = {
         new Date(2025, 0, 16)
       ]
     },
+    storeLocation: {
+      lat: -6.2297,
+      lng: 106.8224,
+      address: 'Jl. Kemang Raya No. 123, Jakarta Selatan'
+    },
     rating: 4.8,
     reviewCount: 24,
     distance: 2.3,

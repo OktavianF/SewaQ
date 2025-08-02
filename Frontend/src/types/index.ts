@@ -46,6 +46,11 @@ export interface ItemDetails extends Omit<Item, 'image' | 'owner'> {
   rentalTerms: string[];
   specifications: ItemSpecification[];
   availability: ItemAvailability;
+  storeLocation: {
+    lat: number;
+    lng: number;
+    address: string;
+  };
 }
 
 export interface Store {

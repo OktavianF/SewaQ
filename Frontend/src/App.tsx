@@ -13,6 +13,7 @@ import Dashboard from "./pages/Dashboard";
 import ProfilePage from "./pages/ProfilePage";
 import ExploreMap from "./pages/ExploreMap";
 import Checkout from "./pages/Checkout";
+import StoreProfile from "./pages/StoreProfile";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/items" element={<Items />} />
           <Route path="/items/:id" element={<ItemDetail />} />
           <Route path="/items/:id/checkout" element={<Checkout />} />
+          <Route path="/store/:storeId" element={<StoreProfile />} />
           <Route path="/explore" element={<ExploreMap />} />
           <Route path="/open-store" element={<OpenStore />} />
           <Route path="/dashboard" element={<Dashboard />} />

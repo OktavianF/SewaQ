@@ -17,9 +17,11 @@ import {
   Shield, 
   Clock, 
   CreditCard,
-  Info
+  Info,
+  Map
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import StoreLocationMap from '@/components/StoreLocationMap';
 
 import { mockItemDetails } from '../data';
 import { ItemDetails } from '../types';
@@ -239,12 +241,20 @@ const ItemDetail = () => {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center gap-4">
-                  <Avatar className="h-12 w-12">
+                  <Avatar 
+                    className="h-12 w-12 cursor-pointer hover:ring-2 hover:ring-primary transition-all"
+                    onClick={() => navigate('/store/1')}
+                  >
                     <AvatarImage src={item.owner.avatar} />
                     <AvatarFallback>{item.owner.name[0]}</AvatarFallback>
                   </Avatar>
                   <div className="flex-1">
-                    <h3 className="font-semibold">{item.owner.name}</h3>
+                    <h3 
+                      className="font-semibold cursor-pointer hover:text-primary transition-colors"
+                      onClick={() => navigate('/store/1')}
+                    >
+                      {item.owner.name}
+                    </h3>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                       <span>{item.owner.rating} ({item.owner.reviewCount} ulasan)</span>
@@ -317,36 +327,65 @@ const ItemDetail = () => {
           </Card>
         </div>
 
-        {/* Availability Calendar */}
-        <Card className="mt-8">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Clock className="h-5 w-5" />
-              Kalender Ketersediaan
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="flex justify-center">
-              <Calendar
-                mode="single"
-                selected={selectedDate}
-                onSelect={setSelectedDate}
-                disabled={isDateDisabled}
-                className="pointer-events-auto"
-              />
-            </div>
-            <div className="mt-4 flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-destructive rounded"></div>
-                <span>Tidak tersedia</span>
+        {/* Availability Calendar & Store Location */}
+        <div className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Availability Calendar */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Clock className="h-5 w-5" />
+                Kalender Ketersediaan
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex justify-center">
+                <Calendar
+                  mode="single"
+                  selected={selectedDate}
+                  onSelect={setSelectedDate}
+                  disabled={isDateDisabled}
+                  className="pointer-events-auto"
+                />
               </div>
-              <div className="flex items-center gap-2">
-                <div className="w-3 h-3 bg-primary rounded"></div>
-                <span>Tersedia</span>
+              <div className="mt-4 flex items-center gap-4 text-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-destructive rounded"></div>
+                  <span>Tidak tersedia</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-3 h-3 bg-primary rounded"></div>
+                  <span>Tersedia</span>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+
+          {/* Store Location Map */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Map className="h-5 w-5" />
+                Lokasi Toko
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="h-80 w-full">
+                <StoreLocationMap
+                  lat={item.storeLocation.lat}
+                  lng={item.storeLocation.lng}
+                  address={item.storeLocation.address}
+                  storeName={item.owner.name}
+                />
+              </div>
+              <div className="mt-4 text-sm text-muted-foreground">
+                <div className="flex items-start gap-2">
+                  <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                  <span>{item.storeLocation.address}</span>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </Layout>
   );
