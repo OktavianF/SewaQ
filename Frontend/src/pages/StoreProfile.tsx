@@ -139,24 +139,24 @@ const StoreProfile = () => {
           Kembali
         </Button>
 
-        {/* Store Header */}
-        <Card className="mb-6">
+        {/* Combined Store Header & Description */}
+        <Card className="mb-6 bg-gradient-to-br from-background to-muted/30">
           <CardContent className="p-6">
             <div className="flex flex-col sm:flex-row gap-6">
-              <Avatar className="h-20 w-20 mx-auto sm:mx-0">
+              <Avatar className="h-24 w-24 mx-auto sm:mx-0 ring-4 ring-primary/10">
                 <AvatarImage src={`https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=200`} />
-                <AvatarFallback className="text-2xl">{store.name[0]}</AvatarFallback>
+                <AvatarFallback className="text-2xl font-bold bg-primary/5">{store.name[0]}</AvatarFallback>
               </Avatar>
               
               <div className="flex-1 text-center sm:text-left">
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
-                  <h1 className="text-2xl font-bold">{store.name}</h1>
-                  <Badge variant="secondary">{store.category}</Badge>
+                  <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">{store.name}</h1>
+                  <Badge variant="secondary" className="text-sm px-3 py-1">{store.category}</Badge>
                 </div>
                 
                 <div className="flex items-center justify-center sm:justify-start gap-1 mb-2">
                   {renderStars(store.rating)}
-                  <span className="ml-2 font-medium">{store.rating}</span>
+                  <span className="ml-2 font-medium text-lg">{store.rating}</span>
                   <span className="text-muted-foreground">({store.itemCount} barang)</span>
                 </div>
                 
@@ -165,12 +165,30 @@ const StoreProfile = () => {
                   <span>{store.address} • {store.distance}km dari Anda</span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Button onClick={handleContactStore} className="flex-1 sm:flex-none">
+                <p className="text-muted-foreground leading-relaxed mb-4 text-sm sm:text-base">
+                  {store.description}
+                </p>
+                
+                <Separator className="my-4" />
+                
+                <div className="mb-4">
+                  <h4 className="font-semibold mb-3 text-sm">Syarat Umum Penyewaan</h4>
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    {extendedStoreData[1].rentalTerms.map((term, index) => (
+                      <li key={index} className="flex items-start gap-2 text-xs sm:text-sm">
+                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                        <span>{term}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button onClick={handleContactStore} className="flex-1 sm:flex-none shadow-lg">
                     <MessageCircle className="h-4 w-4 mr-2" />
                     Hubungi Toko
                   </Button>
-                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground bg-muted/50 px-3 py-2 rounded-md">
                     <Clock className="h-4 w-4" />
                     <span>{extendedStoreData[1].operatingHours}</span>
                   </div>
@@ -180,147 +198,54 @@ const StoreProfile = () => {
           </CardContent>
         </Card>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Left Column */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Store Description */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Tentang Toko</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  {store.description}
-                </p>
-                
-                <Separator className="my-4" />
-                
-                <div>
-                  <h4 className="font-semibold mb-3">Syarat Umum Penyewaan</h4>
-                  <ul className="space-y-2">
-                    {extendedStoreData[1].rentalTerms.map((term, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm">
-                        <span className="w-1.5 h-1.5 bg-primary rounded-full mt-2 flex-shrink-0"></span>
-                        <span>{term}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Store Items */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Barang yang Disewakan ({storeItems.length})</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {storeItems.map((item) => (
-                    <div key={item.id} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                      <div className="aspect-square rounded-lg overflow-hidden mb-3">
-                        <img 
-                          src={item.image} 
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      
-                      <h3 className="font-semibold mb-2 line-clamp-2">{item.title}</h3>
-                      
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-lg font-bold text-primary">
-                          {formatPrice(item.pricePerDay)}/hari
-                        </span>
-                        <Badge variant={item.available ? "default" : "secondary"}>
-                          {item.available ? "Tersedia" : "Disewa"}
-                        </Badge>
-                      </div>
-                      
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="w-full"
-                        onClick={() => navigate(`/items/${item.id}`)}
-                      >
-                        <Eye className="h-4 w-4 mr-2" />
-                        Lihat Detail
-                      </Button>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Reviews */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Ulasan Penyewa</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {extendedStoreData[1].reviews.map((review) => (
-                    <div key={review.id} className="border-b pb-4 last:border-b-0">
-                      <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="font-medium">{review.customerName}</span>
-                            <span className="text-sm text-muted-foreground">
-                              {new Date(review.date).toLocaleDateString('id-ID')}
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-1">
-                            {renderStars(review.rating)}
-                          </div>
-                        </div>
-                      </div>
-                      <p className="text-sm text-muted-foreground">{review.comment}</p>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Right Column - Store Location */}
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5" />
-                  Lokasi Toko
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="h-64 w-full mb-4">
-                  <StoreLocationMap
-                    lat={store.location.lat}
-                    lng={store.location.lng}
-                    address={store.address}
-                    storeName={store.name}
-                  />
-                </div>
-                
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-start gap-2">
-                    <MapPin className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <span>{store.address}</span>
+        {/* Store Items - Full Width */}
+        <Card className="shadow-lg">
+          <CardHeader className="pb-4">
+            <CardTitle className="text-xl flex items-center gap-2">
+              Barang yang Disewakan 
+              <Badge variant="outline" className="text-sm">{storeItems.length} item</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+              {storeItems.map((item) => (
+                <div key={item.id} className="group border rounded-xl p-3 hover:shadow-lg hover:scale-[1.02] transition-all duration-300 bg-gradient-to-b from-background to-muted/20">
+                  <div className="aspect-square rounded-lg overflow-hidden mb-3 bg-muted/50">
+                    <img 
+                      src={item.image} 
+                      alt={item.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    <Phone className="h-4 w-4 flex-shrink-0" />
-                    <span>{store.phone}</span>
+                  <h3 className="font-semibold mb-2 line-clamp-2 text-sm group-hover:text-primary transition-colors">{item.title}</h3>
+                  
+                  <div className="space-y-2 mb-3">
+                    <div className="text-sm font-bold text-primary">
+                      {formatPrice(item.pricePerDay)}<span className="text-xs font-normal text-muted-foreground">/hari</span>
+                    </div>
+                    <Badge 
+                      variant={item.available ? "default" : "secondary"} 
+                      className="text-xs px-2 py-0.5 w-full justify-center"
+                    >
+                      {item.available ? "Tersedia" : "Disewa"}
+                    </Badge>
                   </div>
                   
-                  <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 flex-shrink-0" />
-                    <span>{extendedStoreData[1].operatingHours}</span>
-                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="w-full text-xs h-8 group-hover:bg-primary group-hover:text-primary-foreground transition-colors"
+                    onClick={() => navigate(`/items/${item.id}`)}
+                  >
+                    <Eye className="h-3 w-3 mr-1" />
+                    Detail
+                  </Button>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </Layout>
   );
