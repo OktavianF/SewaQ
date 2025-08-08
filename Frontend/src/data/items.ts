@@ -10,9 +10,9 @@ export const mockItems: Item[] = [
     rating: 4.8,
     reviewCount: 24,
     distance: 2.3,
-    location: 'Kemang, Jakarta Selatan',
+    location: 'Mendalan, Lamongan',
     owner: 'Ahmad Rental',
-    image: 'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400',
+    image: 'https://images.pexels.com/photos/1787220/pexels-photo-1787220.jpeg',
     available: true
   },
   {
@@ -24,9 +24,9 @@ export const mockItems: Item[] = [
     rating: 4.6,
     reviewCount: 18,
     distance: 4.7,
-    location: 'Senayan, Jakarta Pusat',
+    location: 'Mendalan, Lamongan',
     owner: 'Outdoor Gear',
-    image: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=400',
+    image: 'https://images.pexels.com/photos/2612228/pexels-photo-2612228.jpeg',
     available: true
   },
   {
@@ -38,9 +38,9 @@ export const mockItems: Item[] = [
     rating: 4.9,
     reviewCount: 31,
     distance: 6.2,
-    location: 'Blok M, Jakarta Selatan',
+    location: 'Mendalan, Lamongan',
     owner: 'Game Station',
-    image: 'https://images.unsplash.com/photo-1607853202273-797f1c22a38e?w=400',
+    image: 'https://images.pexels.com/photos/7776100/pexels-photo-7776100.jpeg',
     available: false
   },
   {
@@ -52,9 +52,9 @@ export const mockItems: Item[] = [
     rating: 4.7,
     reviewCount: 15,
     distance: 8.1,
-    location: 'Menteng, Jakarta Pusat',
+    location: 'Mendalan, Lamongan',
     owner: 'Tech Rental Pro',
-    image: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400',
+    image: 'https://images.pexels.com/photos/2867980/pexels-photo-2867980.jpeg',
     available: true
   }
 ];
@@ -66,9 +66,9 @@ export const mockItemDetails: { [key: number]: ItemDetails } = {
     description: 'Kamera DSLR profesional Canon EOS 80D dengan sensor APS-C 24.2MP. Dilengkapi dengan fitur autofocus yang cepat dan akurat, perfect untuk fotografi portrait, landscape, dan event. Kondisi sangat baik dan terawat.',
     category: 'Elektronik',
     images: [
-      'https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=800',
-      'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=800',
-      'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=800'
+      'https://images.pexels.com/photos/1787235/pexels-photo-1787235.jpeg',
+      'https://images.pexels.com/photos/1787220/pexels-photo-1787220.jpeg',
+      'https://images.pexels.com/photos/1787234/pexels-photo-1787234.jpeg'
     ],
     pricePerDay: 75000,
     pricing: {
@@ -82,9 +82,9 @@ export const mockItemDetails: { [key: number]: ItemDetails } = {
       name: 'Ahmad Rental',
       rating: 4.8,
       reviewCount: 24,
-      location: 'Kemang, Jakarta Selatan',
+      location: 'Mendalan, Lamongan',
       joinDate: '2023',
-      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100'
+      avatar: 'https://images.pexels.com/photos/598917/pexels-photo-598917.jpeg'
     },
     rentalTerms: [
       'Deposit Rp 500.000 (dikembalikan setelah barang kembali)',
@@ -110,9 +110,9 @@ export const mockItemDetails: { [key: number]: ItemDetails } = {
       ]
     },
     storeLocation: {
-      lat: -6.2297,
-      lng: 106.8224,
-      address: 'Jl. Kemang Raya No. 123, Jakarta Selatan'
+      lat: -7.117505,
+      lng: 112.423096,
+      address: 'Jl. Mendalan Raya No. 123, Lamongan'
     },
     rating: 4.8,
     reviewCount: 24,

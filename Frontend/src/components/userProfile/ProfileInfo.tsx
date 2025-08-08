@@ -11,10 +11,10 @@ import { useToast } from '@/hooks/use-toast';
 const ProfileInfo = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({
-    fullName: 'John Doe',
-    email: 'john.doe@example.com',
+    fullName: 'Nadia Putri',
+    email: 'nadia@gmail.com',
     whatsapp: '+6281234567890',
-    address: 'Jl. Example No. 123, Jakarta',
+    address: 'Jl. Turi No. 123, Lamongan',
     profileImage: ''
   });
 
